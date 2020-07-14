@@ -15,6 +15,16 @@ const ToDo = () => {
         e.preventDefault()
     };
 
+    const toggleTask = taskId => {
+        dispatch({ type: "TOGGLE_TASK", payload:taskId })
+    };
+
+    // const clearCompleted = e => {
+    //     this.setState({
+    //       tasks: this.state.tasks.filter(task => task.completed === false)
+    //     });
+    //   };
+
     return (
         <div>
             <form onSubmit={submitHandler}>
@@ -24,16 +34,24 @@ const ToDo = () => {
                     value={newTaskText}
                     onChange={handleChanges}
                 />
-                <button onClick={() => dispatch({ type: "ADD_TASK", payload: newTaskText})}>Add</button>
+                <button onClick={() => dispatch({ type: "ADD_TASK", payload: newTaskText })}>Add</button>
             </form>
             {
                 state.map(task => (
                     <div>
-                        <li key={task.id}>{task.item}</li>
+                        <div 
+                            key={task.id}
+                            onClick={() => {toggleTask(task.id)}} 
+                            className={`task${task.completed? "completed" : ""}`}
+                        >
+                            {task.item}
+                        </div>
                     </div>
                 ))
             }
-               
+            <div>
+                <button onClick={() => dispatch({ type: "REMOVE_COMPLETED" })}>Clear completed</button>   
+            </div>
         </div>
     )
 };
