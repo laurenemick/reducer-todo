@@ -13,12 +13,6 @@ const ToDo = () => {
 
     const submitHandler = e => {
         e.preventDefault()
-        dispatch({
-            type: "NEW_TASK",
-            payload: newTaskText
-
-        })
-        setNewTaskText("");
     };
 
     return (
@@ -30,9 +24,16 @@ const ToDo = () => {
                     value={newTaskText}
                     onChange={handleChanges}
                 />
-                <button onClick={() => dispatch({ type: "ADD_TASK", payload: newTaskText })}>Add</button>
+                <button onClick={() => dispatch({ type: "ADD_TASK", payload: newTaskText})}>Add</button>
             </form>
-
+            {
+                state.map(task => (
+                    <div>
+                        <li key={task.id}>{task.item}</li>
+                    </div>
+                ))
+            }
+               
         </div>
     )
 };
